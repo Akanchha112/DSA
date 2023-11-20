@@ -1,57 +1,38 @@
 #include <iostream>
 #include <vector>
 
-int firstPos(std::vector<int>& arr, int n, int key) {
-    int s = 0;
-    int e = n - 1;
-    int mid = s + (e - s) / 2;
-    int ans = -1;
-
-    while (s <= e) {
-        if (arr[mid] == key) {
-            ans = mid;
-            e = mid - 1;
-        } else if (key > arr[mid]) {
-            s = mid + 1;
-        } else if (key < arr[mid]) {
-            e = mid - 1;
-        }
-        mid = s + (e - s) / 2;
-    }
-
-    return ans;
-}
-
-int lastPos(std::vector<int>& arr, int n, int key) {
-    int s = 0;
-    int e = n - 1;
-    int mid = s + (e - s) / 2;
-    int ans = -1;
-
-    while (s <= e) {
-        if (arr[mid] == key) {
-            ans = mid;
-            s = mid + 1;
-        } else if (key > arr[mid]) {
-            s = mid + 1;
-        } else if (key < arr[mid]) {
-            e = mid - 1;
-        }
-        mid = s + (e - s) / 2;
-    }
-
-    return ans;
-}
-
 int count(std::vector<int>& arr, int n, int x) {
-    int ans1 = firstPos(arr, n, x);
-    int ans2 = lastPos(arr, n, x);
-
-    if (ans1 == -1 && ans2 == -1) {
-        return 0;
-    } else {
-        return ans2 - ans1 + 1;
-    }
+    int start=0,end=n-1,mid;
+	int lb=0,ub=-1;
+	while(start<=end){
+		mid=(start+end)/2;
+		if(arr[mid]==x){
+			lb=mid;
+			end=mid-1;
+		}
+		else if(arr[mid]>x){
+			end=mid-1;
+		}
+		else{
+			start=mid+1;
+		}
+	}
+	start=0; end=n-1;
+	while(start<=end){
+		mid=(start+end)/2;
+		if(arr[mid]==x){
+			ub=mid;
+			start=mid+1;
+		}
+		else if(arr[mid]>x){
+			end=mid-1;
+		}
+		else{
+			start=mid+1;
+		}
+	}
+	int a=ub-lb+1;
+	return a;
 }
 
 int main() {
